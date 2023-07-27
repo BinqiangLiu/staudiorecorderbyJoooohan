@@ -2,8 +2,8 @@
 import streamlit as st
 import subprocess
 import openai
-import pyttsx3
-import sounddevice as sd
+#import pyttsx3
+#import sounddevice as sd
 import soundfile as sf
 import numpy as np
 from audio_recorder_streamlit import audio_recorder
@@ -66,16 +66,16 @@ def chat_with_openai(input_text):
     return response["choices"][0]["message"]["content"]
 
 # Function to convert text to speech using pyttsx3
-def text_to_speech(text):
-    engine = pyttsx3.init()
-    engine.setProperty("rate", 150)
-    engine.setProperty("voice", "english-us")
-    engine.save_to_file(text, "response.mp3")
-    engine.runAndWait()
-    with open("response.mp3", "rb") as file:
-        response_audio = file.read()
-    os.remove("response.mp3")  # Remove the temporary audio file
-    return response_audio
+#def text_to_speech(text):
+#    engine = pyttsx3.init()
+#    engine.setProperty("rate", 150)
+#    engine.setProperty("voice", "english-us")
+#    engine.save_to_file(text, "response.mp3")
+#    engine.runAndWait()
+#    with open("response.mp3", "rb") as file:
+#        response_audio = file.read()
+#    os.remove("response.mp3")  # Remove the temporary audio file
+#    return response_audio
 
     if audio_bytes:
         st.audio(audio_bytes, format="audio/wav")
@@ -92,7 +92,7 @@ st.write("AI: " + response)
 
         # Audio output section
 st.header("Step 2: Listen to the AI Response")
-st.audio(text_to_speech(response), format="audio/mp3", start_time=0)
+#st.audio(text_to_speech(response), format="audio/mp3", start_time=0)
 
 #if __name__ == "__main__":
 #    main()
