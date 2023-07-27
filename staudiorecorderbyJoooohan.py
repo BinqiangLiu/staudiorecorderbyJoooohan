@@ -11,7 +11,7 @@ import numpy as np
 #运行的时候有报错sh:1: ffmpeg not found
 import ffmpeg
 import av
-from pydub import AudioSegment
+#from pydub import AudioSegment
 # Load environment variables
 from dotenv import load_dotenv
 import os
