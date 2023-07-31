@@ -69,21 +69,21 @@ system_message = response["choices"][0]["message"]["content"]
 
 st.write("---")
 #将ChatGPT的反馈response输出（复杂格式形式）
-    print(response)    
-    st.write("ChatGPT的反馈/文字形式（response的完整复杂格式内容）\n\n", response)
-    st.write("---")
-    st.write("ChatGPT的反馈/文字形式（response主体内容system_message：\n\n", system_message) 
+print(response)    
+st.write("ChatGPT的反馈/文字形式（response的完整复杂格式内容）\n\n", response)
+st.write("---")
+st.write("ChatGPT的反馈/文字形式（response主体内容system_message：\n\n", system_message) 
 
 #   为了保持记忆，使用了append ChatGPT system_message (assistant role) back to conversation
-    conversation.append({"role": "assistant", "content": system_message})
+conversation.append({"role": "assistant", "content": system_message})
 
 st.write("---")
 # Display the chat history
-    st.header("你和AI的问答文字记录")
-    st.write("你的提问（语音转文字）:\n\n " + transcript)
+st.header("你和AI的问答文字记录")
+st.write("你的提问（语音转文字）:\n\n " + transcript)
 #    st.write("你的提问（语音转文字）: " + transcript["text"])
 st.write("---")
-    st.write("【语音播放AI的回答】")   
+st.write("【语音播放AI的回答】")   
 
 st.write("---")
 language = detect(system_message)
