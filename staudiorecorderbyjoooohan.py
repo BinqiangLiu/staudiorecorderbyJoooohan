@@ -57,15 +57,15 @@ print("Transcript of your questions:",  transcript)
 
 st.write("---")
 #在将输入语音转文字后，将其作为与ChatGPT聊天的输入（为了保持“记忆”，使用了append）
-    conversation.append({"role": "user", "content": transcript})
+conversation.append({"role": "user", "content": transcript})
 #    conversation.append({"role": "user", "content": transcript["text"]})    
     
-    response = openai.ChatCompletion.create(
+response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages=conversation
-    )    
+)    
 #   system_message只提取response的主体部分content
-    system_message = response["choices"][0]["message"]["content"]
+system_message = response["choices"][0]["message"]["content"]
 
 st.write("---")
 #将ChatGPT的反馈response输出（复杂格式形式）
