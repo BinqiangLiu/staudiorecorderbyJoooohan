@@ -42,8 +42,7 @@ try:
         audio_file.close()
 except Exception as e:
     # Handle the error, e.g., print an error message or return a default text
-    print(f"Translation error: {e}")
-    return "请先输入语音"
+    print(f"Translation error: {e}")    
     st.stop()
 
 with open("audiorecorded.mp3", "rb") as sst_audio_file:
