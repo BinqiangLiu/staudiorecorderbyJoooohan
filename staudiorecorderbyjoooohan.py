@@ -2,13 +2,9 @@
 import streamlit as st
 import subprocess
 import openai
-#import pyttsx3
-#import sounddevice as sd
-#import soundfile as sf
 import numpy as np
 from audio_recorder_streamlit import audio_recorder
 import numpy as np
-#运行的时候有报错sh:1: ffmpeg not found
 import ffmpeg
 import av
 from langdetect import detect
@@ -24,7 +20,6 @@ conversation = [{"role": "system", "content": "You are a helpful assistant."}]
 
 st.title("by Joohan Audio to Chat App")
 
-    # Audio input section
 st.header("请先向AI提出您的问题！")
 st.write("点击下方按钮输入语音：红色录音、黑色停止（若5秒钟无输入会自动停止）")
 audio = audio_recorder(pause_threshold=5)
@@ -34,15 +29,17 @@ try:
         # To play audio in frontend:
         st.write("你输入的语音")
         st.audio(audio)    
-    # To save audio to a file:/可以视为是临时文件，就是用于语音转文本用
+# To save audio to a file:/可以视为是临时文件，用于语音转文本用
 #Open file "audiorecorded.mp3" in binary write mode
-#    audio_file = open("audiorecorded.webm", "wb")    
         audio_file = open("audiorecorded.mp3", "wb")
+# 通过write方法，将麦克风录制的音频audio保存到audiorecorded.mp3中
         audio_file.write(audio)
+# 关闭audiorecorded.mp3
         audio_file.close()
 except Exception as e:
-    # Handle the error, e.g., print an error message or return a default text
+    # 否则报错Handle the error, e.g., print an error message or return a default text
     print(f"Translation error: {e}")    
+    st.write("请先向AI输入语音提问")  
     st.stop()
 
 with open("audiorecorded.mp3", "rb") as sst_audio_file:
@@ -51,26 +48,28 @@ with open("audiorecorded.mp3", "rb") as sst_audio_file:
         model = "whisper-1",
         response_format="text"        
     )    
-    st.write("你的语音提问（转文字）",  transcript)
 # Print the transcript of audio input
+    st.write("你的语音提问（转文字）：",  transcript)
     print("Transcript of your questions:",  transcript)
 #因为在openai.Audio.transcribe中使用了response_format="text"，所以直接使用transcript，而不需要使用transcript["text"]
 
 #在将输入语音转文字后，将其作为与ChatGPT聊天的输入（为了保持“记忆”，使用了append）
     conversation.append({"role": "user", "content": transcript})
 #    conversation.append({"role": "user", "content": transcript["text"]})    
+    
     response = openai.ChatCompletion.create(
     model="gpt-3.5-turbo",
     messages=conversation
     )    
-    print(response)    
-    st.write("ChatGPT的反馈/文字形式", response)
-#将ChatGPT的反馈response输出（复杂格式形式）
-    
 #   system_message只提取response的主体部分content
     system_message = response["choices"][0]["message"]["content"]
+    
+#将ChatGPT的反馈response输出（复杂格式形式）
+    print(response)    
+    st.write("ChatGPT的反馈/文字形式", response)
+    st.write("ChatGPT的反馈/文字形式", system_message) 
 
-#   为了保持记忆，使用了append ChatGPT response (assistant role) back to conversation
+#   为了保持记忆，使用了append ChatGPT system_message (assistant role) back to conversation
     conversation.append({"role": "assistant", "content": system_message})
 
 # Display the chat history
@@ -80,34 +79,33 @@ with open("audiorecorded.mp3", "rb") as sst_audio_file:
     st.header("语音播放AI的回答")   
 
 language = detect(system_message)
-
 st.write("检测到输出语言:", language)
 print(language)
 
-def text_to_speech(text):
-    try:
-        tts = gTTS(text, lang=language, slow=False)
-        tts.save("translationresult.mp3")
-        st.write("Success TTS成功将AI回答转换为语音")
-        return "Success TTS成功将AI回答转换为语音"    
-    except Exception as e:
+    def text_to_speech(text):
+        try:
+            tts = gTTS(text, lang=language, slow=False)
+            tts.save("translationresult.mp3")
+            st.write("Success TTS成功将AI回答转换为语音")
+            return "Success TTS成功将AI回答转换为语音"    
+        except Exception as e:
         # Handle the error, e.g., print an error message or return a default text
-        print(f"Translation error: {e}")
-        st.write("TTS RESULT ERROR将AI回答转语音失败！")
-        return "TTS RESULT ERROR将AI回答转语音失败！"
-        st.stop()
+            print(f"Translation error: {e}")
+            st.write("TTS RESULT ERROR将AI回答转语音失败！")
+            return "TTS RESULT ERROR将AI回答转语音失败！"
+            st.stop()
 
-if system_message is None:
-    st.write("请先向AI提问！")    
-    st.stop()
-else: 
-    st.write("你的提问（AI问答模型中的记录transcript）")
-    st.write(transcript)
-    st.write("AI回答")            
-    ai_output_audio = text_to_speech(system_message)
-    audio_file = open("translationresult.mp3", "rb")
-    audio_bytes = audio_file.read()
-    st.audio("translationresult.mp3")
-    st.write(response)    
-    st.write(system_message)    
-    st.write("AI回答（文字）: " + system_message)
+    if system_message is None:
+        st.write("请先向AI提问！")    
+        st.stop()
+    else: 
+        st.write("你的提问（AI问答模型中的记录transcript）")
+        st.write(transcript)
+        st.write("AI回答")            
+        ai_output_audio = text_to_speech(system_message)
+        audio_file = open("translationresult.mp3", "rb")
+        audio_bytes = audio_file.read()
+        st.audio("translationresult.mp3")
+        st.write(response)    
+        st.write(system_message)    
+        st.write("AI回答（文字）: " + system_message)
