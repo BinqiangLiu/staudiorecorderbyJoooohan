@@ -82,18 +82,18 @@ language = detect(system_message)
 st.write("检测到输出语言:", language)
 print(language)
 
-    def text_to_speech(text):
-        try:
-            tts = gTTS(text, lang=language, slow=False)
-            tts.save("translationresult.mp3")
-            st.write("Success TTS成功将AI回答转换为语音")
-            return "Success TTS成功将AI回答转换为语音"    
-        except Exception as e:
+def text_to_speech(text):
+    try:
+        tts = gTTS(text, lang=language, slow=False)
+        tts.save("translationresult.mp3")
+        st.write("Success TTS成功将AI回答转换为语音")
+        return "Success TTS成功将AI回答转换为语音"    
+    except Exception as e:
         # Handle the error, e.g., print an error message or return a default text
-            print(f"Translation error: {e}")
-            st.write("TTS RESULT ERROR将AI回答转语音失败！")
-            return "TTS RESULT ERROR将AI回答转语音失败！"
-            st.stop()
+        print(f"Translation error: {e}")
+        st.write("TTS RESULT ERROR将AI回答转语音失败！")
+        return "TTS RESULT ERROR将AI回答转语音失败！"
+        st.stop()
 
     if system_message is None:
         st.write("请先向AI提问！")    
