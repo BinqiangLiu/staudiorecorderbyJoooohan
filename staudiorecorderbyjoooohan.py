@@ -51,8 +51,8 @@ with open("audiorecorded.mp3", "rb") as sst_audio_file:
     )    
 st.write("---")    
 # Print the transcript of audio input
-    st.write("你的语音提问（转文字）：\n\n",  transcript)
-    print("Transcript of your questions:",  transcript)
+st.write("你的语音提问（转文字）：\n\n",  transcript)
+print("Transcript of your questions:",  transcript)
 #因为在openai.Audio.transcribe中使用了response_format="text"，所以直接使用transcript，而不需要使用transcript["text"]
 
 st.write("---")
