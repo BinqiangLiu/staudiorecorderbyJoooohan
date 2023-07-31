@@ -68,6 +68,7 @@ with open("audiorecorded.mp3", "rb") as sst_audio_file:
 #将ChatGPT的反馈response输出（复杂格式形式）
     print(response)    
     st.write("ChatGPT的反馈/文字形式", response)
+    st.write("---")
     st.write("ChatGPT的反馈/文字形式", system_message) 
 
 #   为了保持记忆，使用了append ChatGPT system_message (assistant role) back to conversation
