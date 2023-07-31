@@ -107,10 +107,10 @@ if system_message is None:
     st.write("请先向AI提问！")    
     st.stop()
 else: 
-    st.write("你的提问（AI问答模型中的记录transcript）：\n\n", transcript)
+#    st.write("你的提问（AI问答模型中的记录transcript）：\n\n", transcript)
 #    st.write(transcript)
-    st.write("---")
-    st.write("AI回答：\n\n")            
+#    st.write("---")
+#    st.write("AI回答：\n\n")            
     ai_output_audio = text_to_speech(system_message)
     audio_file = open("translationresult.mp3", "rb")
     audio_bytes = audio_file.read()
