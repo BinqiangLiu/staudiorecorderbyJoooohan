@@ -8,6 +8,7 @@ import numpy as np
 import ffmpeg
 import av
 from langdetect import detect
+from gtts import gTTS
 
 # Load environment variables
 from dotenv import load_dotenv
