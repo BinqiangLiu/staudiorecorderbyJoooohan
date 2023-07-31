@@ -22,7 +22,7 @@ conversation = [{"role": "system", "content": "You are a helpful assistant."}]
 st.title("by Joohan Audio to Chat App")
 st.write("---")
 st.header("请先向AI提出您的问题！")
-st.write("点击下方按钮输入语音：红色录音、黑色停止（若5秒钟无输入会自动停止）")
+st.write("点击下方按钮输入语音（5秒无输入则自动停止）")
 audio = audio_recorder(text="红色图标录音中，黑色停止", pause_threshold=5)
 st.write("---")
 
