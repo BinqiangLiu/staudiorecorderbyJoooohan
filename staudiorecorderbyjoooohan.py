@@ -40,7 +40,7 @@ try:
 except Exception as e:
     # 否则报错Handle the error, e.g., print an error message or return a default text
     print(f"Translation error: {e}")    
-    st.write("请先向AI输入语音提问")  
+    st.write("请先向AI输入语音提问！")  
     st.stop()
 
 with open("audiorecorded.mp3", "rb") as sst_audio_file:
@@ -50,7 +50,7 @@ with open("audiorecorded.mp3", "rb") as sst_audio_file:
         response_format="text"        
     )    
 # Print the transcript of audio input
-    st.write("你的语音提问（转文字）：",  transcript)
+    st.write("你的语音提问（转文字）：\n\n",  transcript)
     print("Transcript of your questions:",  transcript)
 #因为在openai.Audio.transcribe中使用了response_format="text"，所以直接使用transcript，而不需要使用transcript["text"]
 
@@ -67,29 +67,29 @@ with open("audiorecorded.mp3", "rb") as sst_audio_file:
     
 #将ChatGPT的反馈response输出（复杂格式形式）
     print(response)    
-    st.write("ChatGPT的反馈/文字形式", response)
+    st.write("ChatGPT的反馈/文字形式\n\n", response)
     st.write("---")
-    st.write("ChatGPT的反馈/文字形式", system_message) 
+    st.write("ChatGPT的反馈/文字形式：\n\n", system_message) 
 
 #   为了保持记忆，使用了append ChatGPT system_message (assistant role) back to conversation
     conversation.append({"role": "assistant", "content": system_message})
 
 # Display the chat history
     st.header("你和AI的问答文字记录")
-    st.write("你的提问（语音转文字）: " + transcript)
+    st.write("你的提问（语音转文字）:\n\n " + transcript)
 #    st.write("你的提问（语音转文字）: " + transcript["text"])
     st.write("【语音播放AI的回答】")   
 
 language = detect(system_message)
-st.write("检测到输出语言:", language)
+st.write("检测到输出语言：", language)
 print(language)
 
 def text_to_speech(text):
     try:
         tts = gTTS(text, lang=language, slow=False)
         tts.save("translationresult.mp3")
-        st.write("Success TTS成功将AI回答转换为语音")
-        return "Success TTS成功将AI回答转换为语音"    
+#        st.write("Success TTS成功将AI回答转换为语音！")
+        return "Success TTS成功将AI回答转换为语音！"    
     except Exception as e:
         # Handle the error, e.g., print an error message or return a default text
         print(f"Translation error: {e}")
@@ -101,13 +101,13 @@ if system_message is None:
     st.write("请先向AI提问！")    
     st.stop()
 else: 
-    st.write("你的提问（AI问答模型中的记录transcript）")
-    st.write(transcript)
-    st.write("AI回答")            
+    st.write("你的提问（AI问答模型中的记录transcript）：\n\n", transcript)
+#    st.write(transcript)
+    st.write("AI回答：\n\n")            
     ai_output_audio = text_to_speech(system_message)
     audio_file = open("translationresult.mp3", "rb")
     audio_bytes = audio_file.read()
     st.audio("translationresult.mp3")
-    st.write(response)    
-    st.write(system_message)    
-    st.write("AI回答（文字）: " + system_message)
+    st.write("ChatGPT的反馈/文字形式\n\n", response)    
+    st.write("ChatGPT的反馈/文字形式：\n\n", system_message)    
+    st.write("AI回答（文字）:：\n\n " + system_message)
