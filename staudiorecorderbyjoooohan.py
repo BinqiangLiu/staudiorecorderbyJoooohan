@@ -114,7 +114,6 @@ else:
     ai_output_audio = text_to_speech(system_message)
     audio_file = open("translationresult.mp3", "rb")
     audio_bytes = audio_file.read()
-    st.write("---")
     st.write("检测到输出语言：", language)
     print(language)
     st.audio("translationresult.mp3")
