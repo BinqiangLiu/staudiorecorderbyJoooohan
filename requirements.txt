@@ -16,3 +16,4 @@ python-ffmpeg
 gTTS
 googletrans
 audio-recorder-streamlit
+langdetect
