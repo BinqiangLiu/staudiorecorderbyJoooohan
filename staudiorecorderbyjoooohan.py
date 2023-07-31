@@ -32,12 +32,12 @@ audio = audio_recorder()
 if len(audio) > 0:
     # To play audio in frontend:
     st.write("你输入的语音")
-    st.audio(audio.tobytes())    
+    st.audio(audio)    
     # To save audio to a file:/可以视为是临时文件，就是用于语音转文本用
 #Open file "audiorecorded.mp3" in binary write mode
 #    audio_file = open("audiorecorded.webm", "wb")    
     audio_file = open("audiorecorded.mp3", "wb")
-    audio_file.write(audio.tobytes())
+    audio_file.write(audio)
     audio_file.close()
 
 with open("audiorecorded.mp3", "rb") as sst_audio_file:
