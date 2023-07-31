@@ -76,7 +76,7 @@ with open("audiorecorded.mp3", "rb") as sst_audio_file:
     st.header("你和AI的问答文字记录")
     st.write("你的提问（语音转文字）: " + transcript)
 #    st.write("你的提问（语音转文字）: " + transcript["text"])
-    st.header("语音播放AI的回答")   
+    st.write("【语音播放AI的回答】")   
 
 language = detect(system_message)
 st.write("检测到输出语言:", language)
@@ -95,17 +95,17 @@ def text_to_speech(text):
         return "TTS RESULT ERROR将AI回答转语音失败！"
         st.stop()
 
-    if system_message is None:
-        st.write("请先向AI提问！")    
-        st.stop()
-    else: 
-        st.write("你的提问（AI问答模型中的记录transcript）")
-        st.write(transcript)
-        st.write("AI回答")            
-        ai_output_audio = text_to_speech(system_message)
-        audio_file = open("translationresult.mp3", "rb")
-        audio_bytes = audio_file.read()
-        st.audio("translationresult.mp3")
-        st.write(response)    
-        st.write(system_message)    
-        st.write("AI回答（文字）: " + system_message)
+if system_message is None:
+    st.write("请先向AI提问！")    
+    st.stop()
+else: 
+    st.write("你的提问（AI问答模型中的记录transcript）")
+    st.write(transcript)
+    st.write("AI回答")            
+    ai_output_audio = text_to_speech(system_message)
+    audio_file = open("translationresult.mp3", "rb")
+    audio_bytes = audio_file.read()
+    st.audio("translationresult.mp3")
+    st.write(response)    
+    st.write(system_message)    
+    st.write("AI回答（文字）: " + system_message)
